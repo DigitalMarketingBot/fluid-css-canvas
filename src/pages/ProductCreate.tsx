@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Upload, ArrowUp, List } from "lucide-react";
+import { Plus, Upload, ArrowUp, List, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useRef } from "react";
 
 const SelectWithAdd = ({
   label,
@@ -82,6 +83,8 @@ const RichTextPlaceholder = ({ label }: { label: string }) => (
 const ProductCreate = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [coverImage, setCoverImage] = useState<string | null>(null);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
@@ -156,17 +159,64 @@ const ProductCreate = () => {
                 {/* Cover Image */}
                 <div className="space-y-2">
                   <Label>Cover Image</Label>
-                  <div className="border-2 border-dashed border-input rounded-lg p-8 text-center hover:border-primary/50 transition-colors cursor-pointer">
-                    <div className="flex flex-col items-center gap-2">
-                      <Upload className="w-8 h-8 text-muted-foreground" />
-                      <p className="text-sm text-muted-foreground">
-                        Drop file here or click to upload
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Image size 1920 x 1080
-                      </p>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (ev) => setCoverImage(ev.target?.result as string);
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                  {coverImage ? (
+                    <div className="relative rounded-lg overflow-hidden border border-input">
+                      <img
+                        src={coverImage}
+                        alt="Cover preview"
+                        className="w-full max-h-64 object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCoverImage(null);
+                          if (fileInputRef.current) fileInputRef.current.value = "";
+                        }}
+                        className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1 hover:bg-destructive/90 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
                     </div>
-                  </div>
+                  ) : (
+                    <div
+                      onClick={() => fileInputRef.current?.click()}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        const file = e.dataTransfer.files?.[0];
+                        if (file && file.type.startsWith("image/")) {
+                          const reader = new FileReader();
+                          reader.onload = (ev) => setCoverImage(ev.target?.result as string);
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                      className="border-2 border-dashed border-input rounded-lg p-8 text-center hover:border-primary/50 transition-colors cursor-pointer"
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <Upload className="w-8 h-8 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">
+                          Drop file here or click to upload
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Image size 1920 x 1080
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Fabric & Shape */}
