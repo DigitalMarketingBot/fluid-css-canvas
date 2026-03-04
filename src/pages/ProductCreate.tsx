@@ -471,6 +471,7 @@ const ProductCreate = () => {
       <AddBrandModal open={brandModalOpen} onOpenChange={setBrandModalOpen} />
       <AddCategoryModal open={categoryModalOpen} onOpenChange={setCategoryModalOpen} />
       <AddSubCategoryModal open={subCategoryModalOpen} onOpenChange={setSubCategoryModalOpen} />
+      <AddChildCategoryModal open={childCategoryModalOpen} onOpenChange={setChildCategoryModalOpen} />
     </div>
   );
 };
