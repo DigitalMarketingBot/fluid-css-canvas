@@ -1,4 +1,4 @@
-import { useState, useEffect, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { Card } from "@/components/ui/card";
@@ -7,11 +7,22 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getCharges, deleteCharge, subscribe } from "@/store/deliveryCharges";
 import { useToast } from "@/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const DeliveryChargeList = () => {
   const charges = useSyncExternalStore(subscribe, getCharges);
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -20,9 +31,12 @@ const DeliveryChargeList = () => {
   const startIndex = (currentPage - 1) * entriesPerPage;
   const paginatedCharges = charges.slice(startIndex, startIndex + entriesPerPage);
 
-  const handleDelete = (id: number) => {
-    deleteCharge(id);
-    toast({ title: "Delivery charge deleted" });
+  const confirmDelete = () => {
+    if (deleteId !== null) {
+      deleteCharge(deleteId);
+      toast({ title: "Delivery charge deleted" });
+      setDeleteId(null);
+    }
   };
 
   const getPageNumbers = () => {
@@ -66,7 +80,7 @@ const DeliveryChargeList = () => {
                             <button onClick={() => navigate(`/delivery-charge?edit=${item.id}`)} className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors">
                               <Pencil className="w-4 h-4" />
                             </button>
-                            <button onClick={() => handleDelete(item.id)} className="w-8 h-8 rounded bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/90 transition-colors">
+                            <button onClick={() => setDeleteId(item.id)} className="w-8 h-8 rounded bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/90 transition-colors">
                               <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
@@ -104,6 +118,23 @@ const DeliveryChargeList = () => {
           </div>
         </main>
       </div>
+
+      <AlertDialog open={deleteId !== null} onOpenChange={(open) => !open && setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Delivery Charge</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this delivery charge? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
