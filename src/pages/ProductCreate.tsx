@@ -10,17 +10,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Plus, Upload, ArrowUp, List, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRef } from "react";
+import { AddSellerModal } from "@/components/AddSellerModal";
 
 const SelectWithAdd = ({
   label,
   placeholder,
   value,
   onChange,
+  onAddNew,
 }: {
   label: string;
   placeholder: string;
   value: string;
   onChange: (v: string) => void;
+  onAddNew?: () => void;
 }) => (
   <div className="space-y-2">
     <Label>{label}</Label>
@@ -38,6 +41,7 @@ const SelectWithAdd = ({
         type="button"
         size="sm"
         className="shrink-0 h-10 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
+        onClick={onAddNew}
       >
         Add New
       </Button>
@@ -85,6 +89,7 @@ const ProductCreate = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [coverImage, setCoverImage] = useState<string | null>(null);
+  const [sellerModalOpen, setSellerModalOpen] = useState(false);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
@@ -226,6 +231,7 @@ const ProductCreate = () => {
                     placeholder="Select seller name"
                     value={fabric}
                     onChange={setFabric}
+                    onAddNew={() => setSellerModalOpen(true)}
                   />
                   <SelectWithAdd
                     label="Shape"
@@ -449,6 +455,7 @@ const ProductCreate = () => {
           </div>
         </main>
       </div>
+      <AddSellerModal open={sellerModalOpen} onOpenChange={setSellerModalOpen} />
     </div>
   );
 };
