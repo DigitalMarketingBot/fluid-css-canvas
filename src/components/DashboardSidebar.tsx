@@ -21,6 +21,7 @@ const menuItems = [
       { label: "Product List", path: "/products" },
       { label: "Discount Product" },
       { label: "Delivery Charge", path: "/delivery-charge" },
+      { label: "Delivery Charge List", path: "/delivery-charge-list" },
     ],
   },
   { icon: ShoppingCart, label: "Order", hasSubmenu: true },
