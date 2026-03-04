@@ -20,7 +20,7 @@ const menuItems = [
       { label: "Add Product" },
       { label: "Product List", path: "/products" },
       { label: "Discount Product" },
-      { label: "Delivery Charge" },
+      { label: "Delivery Charge", path: "/delivery-charge" },
     ],
   },
   { icon: ShoppingCart, label: "Order", hasSubmenu: true },
