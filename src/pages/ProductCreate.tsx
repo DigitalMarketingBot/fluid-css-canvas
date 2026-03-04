@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useRef } from "react";
 import { AddSellerModal } from "@/components/AddSellerModal";
 import { AddBrandModal } from "@/components/AddBrandModal";
+import { AddCategoryModal } from "@/components/AddCategoryModal";
 
 const SelectWithAdd = ({
   label,
@@ -92,6 +93,7 @@ const ProductCreate = () => {
   const [coverImage, setCoverImage] = useState<string | null>(null);
   const [sellerModalOpen, setSellerModalOpen] = useState(false);
   const [brandModalOpen, setBrandModalOpen] = useState(false);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
@@ -257,6 +259,7 @@ const ProductCreate = () => {
                     placeholder="Select Category Name"
                     value={category}
                     onChange={setCategory}
+                    onAddNew={() => setCategoryModalOpen(true)}
                   />
                 </div>
 
@@ -460,6 +463,7 @@ const ProductCreate = () => {
       </div>
       <AddSellerModal open={sellerModalOpen} onOpenChange={setSellerModalOpen} />
       <AddBrandModal open={brandModalOpen} onOpenChange={setBrandModalOpen} />
+      <AddCategoryModal open={categoryModalOpen} onOpenChange={setCategoryModalOpen} />
     </div>
   );
 };
