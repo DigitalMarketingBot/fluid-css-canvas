@@ -17,7 +17,7 @@ const menuItems = [
       { label: "Color" },
       { label: "Size" },
       { label: "Add Attributes" },
-      { label: "Add Product" },
+      { label: "Add Product", path: "/product-create" },
       { label: "Product List", path: "/products" },
       { label: "Discount Product" },
       { label: "Delivery Charge", path: "/delivery-charge" },
