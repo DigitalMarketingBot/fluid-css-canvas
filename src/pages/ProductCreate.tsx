@@ -455,6 +455,7 @@ const ProductCreate = () => {
           </div>
         </main>
       </div>
+      <AddSellerModal open={sellerModalOpen} onOpenChange={setSellerModalOpen} />
     </div>
   );
 };
