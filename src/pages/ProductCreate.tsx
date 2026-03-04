@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Upload, ArrowUp, List, X } from "lucide-react";
+import { Plus, Upload, ArrowUp, List, X, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRef } from "react";
 import { AddSellerModal } from "@/components/AddSellerModal";
@@ -48,6 +48,15 @@ const SelectWithAdd = ({
         onClick={onAddNew}
       >
         Add New
+      </Button>
+      <Button
+        type="button"
+        size="icon"
+        variant="outline"
+        className="shrink-0 h-10 w-10"
+        onClick={() => onChange("")}
+      >
+        <RefreshCw className="w-4 h-4" />
       </Button>
     </div>
   </div>
