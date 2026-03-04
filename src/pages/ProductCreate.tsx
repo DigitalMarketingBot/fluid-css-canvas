@@ -83,6 +83,8 @@ const RichTextPlaceholder = ({ label }: { label: string }) => (
 const ProductCreate = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [coverImage, setCoverImage] = useState<string | null>(null);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
