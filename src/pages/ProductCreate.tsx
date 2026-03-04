@@ -49,6 +49,7 @@ const SelectWithAdd = ({
       >
         <Plus className="w-4 h-4" />
         Add New
+      </Button>
       <Button
         type="button"
         size="icon"
