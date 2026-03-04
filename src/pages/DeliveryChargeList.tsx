@@ -4,6 +4,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { getCharges, deleteCharge, subscribe } from "@/store/deliveryCharges";
 import { useToast } from "@/hooks/use-toast";
 
@@ -12,6 +13,7 @@ const DeliveryChargeList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const totalEntries = charges.length;
   const totalPages = Math.max(1, Math.ceil(totalEntries / entriesPerPage));
@@ -61,7 +63,7 @@ const DeliveryChargeList = () => {
                         <td className="py-4">{item.status}</td>
                         <td className="py-4">
                           <div className="flex items-center gap-2">
-                            <button className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors">
+                            <button onClick={() => navigate(`/delivery-charge?edit=${item.id}`)} className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors">
                               <Pencil className="w-4 h-4" />
                             </button>
                             <button onClick={() => handleDelete(item.id)} className="w-8 h-8 rounded bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/90 transition-colors">

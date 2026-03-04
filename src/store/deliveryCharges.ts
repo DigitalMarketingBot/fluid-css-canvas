@@ -29,6 +29,15 @@ export function addCharge(name: string, price: string, status: string) {
   notify();
 }
 
+export function updateCharge(id: number, name: string, price: string, status: string) {
+  charges = charges.map((c) => (c.id === id ? { ...c, name, price, status } : c));
+  notify();
+}
+
+export function getChargeById(id: number) {
+  return charges.find((c) => c.id === id);
+}
+
 export function deleteCharge(id: number) {
   charges = charges.filter((c) => c.id !== id);
   notify();
