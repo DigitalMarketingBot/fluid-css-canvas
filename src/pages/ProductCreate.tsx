@@ -222,8 +222,8 @@ const ProductCreate = () => {
                 {/* Fabric & Shape */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <SelectWithAdd
-                    label="Fabric"
-                    placeholder="Select fabric name"
+                    label="Seller"
+                    placeholder="Select seller name"
                     value={fabric}
                     onChange={setFabric}
                   />
