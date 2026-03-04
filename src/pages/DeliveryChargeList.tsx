@@ -22,6 +22,7 @@ const DeliveryChargeList = () => {
   const charges = useSyncExternalStore(subscribe, getCharges);
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -30,9 +31,12 @@ const DeliveryChargeList = () => {
   const startIndex = (currentPage - 1) * entriesPerPage;
   const paginatedCharges = charges.slice(startIndex, startIndex + entriesPerPage);
 
-  const handleDelete = (id: number) => {
-    deleteCharge(id);
-    toast({ title: "Delivery charge deleted" });
+  const confirmDelete = () => {
+    if (deleteId !== null) {
+      deleteCharge(deleteId);
+      toast({ title: "Delivery charge deleted" });
+      setDeleteId(null);
+    }
   };
 
   const getPageNumbers = () => {
