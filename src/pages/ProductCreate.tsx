@@ -89,6 +89,7 @@ const ProductCreate = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [coverImage, setCoverImage] = useState<string | null>(null);
+  const [sellerModalOpen, setSellerModalOpen] = useState(false);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
