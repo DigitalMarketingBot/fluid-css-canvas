@@ -11,6 +11,7 @@ import { Plus, Upload, ArrowUp, List, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRef } from "react";
 import { AddSellerModal } from "@/components/AddSellerModal";
+import { AddBrandModal } from "@/components/AddBrandModal";
 
 const SelectWithAdd = ({
   label,
@@ -90,6 +91,7 @@ const ProductCreate = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [coverImage, setCoverImage] = useState<string | null>(null);
   const [sellerModalOpen, setSellerModalOpen] = useState(false);
+  const [brandModalOpen, setBrandModalOpen] = useState(false);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
@@ -248,6 +250,7 @@ const ProductCreate = () => {
                     placeholder="Select Category Name"
                     value={brand}
                     onChange={setBrand}
+                    onAddNew={() => setBrandModalOpen(true)}
                   />
                   <SelectWithAdd
                     label="Category"
