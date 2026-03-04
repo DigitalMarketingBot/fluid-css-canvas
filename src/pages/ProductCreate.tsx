@@ -47,6 +47,7 @@ const SelectWithAdd = ({
         className="shrink-0 h-10 px-3 bg-primary text-primary-foreground hover:bg-primary/90"
         onClick={onAddNew}
       >
+        <Plus className="w-4 h-4" />
         Add New
       </Button>
       <Button
