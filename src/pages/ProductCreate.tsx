@@ -14,6 +14,7 @@ import { AddSellerModal } from "@/components/AddSellerModal";
 import { AddBrandModal } from "@/components/AddBrandModal";
 import { AddCategoryModal } from "@/components/AddCategoryModal";
 import { AddSubCategoryModal } from "@/components/AddSubCategoryModal";
+import { AddChildCategoryModal } from "@/components/AddChildCategoryModal";
 
 const SelectWithAdd = ({
   label,
@@ -96,6 +97,7 @@ const ProductCreate = () => {
   const [brandModalOpen, setBrandModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [subCategoryModalOpen, setSubCategoryModalOpen] = useState(false);
+  const [childCategoryModalOpen, setChildCategoryModalOpen] = useState(false);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
@@ -279,6 +281,7 @@ const ProductCreate = () => {
                     placeholder="Enter Child Category Name"
                     value={childCategory}
                     onChange={setChildCategory}
+                    onAddNew={() => setChildCategoryModalOpen(true)}
                   />
                 </div>
 
