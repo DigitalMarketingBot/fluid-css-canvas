@@ -80,7 +80,7 @@ const DeliveryChargeList = () => {
                             <button onClick={() => navigate(`/delivery-charge?edit=${item.id}`)} className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors">
                               <Pencil className="w-4 h-4" />
                             </button>
-                            <button onClick={() => handleDelete(item.id)} className="w-8 h-8 rounded bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/90 transition-colors">
+                            <button onClick={() => setDeleteId(item.id)} className="w-8 h-8 rounded bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/90 transition-colors">
                               <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
