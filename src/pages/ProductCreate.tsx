@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { AddSellerModal } from "@/components/AddSellerModal";
 import { AddBrandModal } from "@/components/AddBrandModal";
 import { AddCategoryModal } from "@/components/AddCategoryModal";
+import { AddSubCategoryModal } from "@/components/AddSubCategoryModal";
 
 const SelectWithAdd = ({
   label,
@@ -94,6 +95,7 @@ const ProductCreate = () => {
   const [sellerModalOpen, setSellerModalOpen] = useState(false);
   const [brandModalOpen, setBrandModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [subCategoryModalOpen, setSubCategoryModalOpen] = useState(false);
 
   const [productName, setProductName] = useState("");
   const [productSlug, setProductSlug] = useState("");
@@ -270,6 +272,7 @@ const ProductCreate = () => {
                     placeholder="Enter Sub Category Name"
                     value={subCategory}
                     onChange={setSubCategory}
+                    onAddNew={() => setSubCategoryModalOpen(true)}
                   />
                   <SelectWithAdd
                     label="Child Category"
