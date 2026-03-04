@@ -17,7 +17,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/hooks/use-toast";
 
 const DeliveryChargeList = () => {
   const charges = useSyncExternalStore(subscribe, getCharges);
