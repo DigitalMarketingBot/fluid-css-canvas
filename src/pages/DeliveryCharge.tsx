@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { Card } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus } from "lucide-react";
-import { addCharge } from "@/store/deliveryCharges";
+import { addCharge, updateCharge, getChargeById } from "@/store/deliveryCharges";
 import { useToast } from "@/hooks/use-toast";
 
 const DeliveryCharge = () => {
@@ -15,7 +15,22 @@ const DeliveryCharge = () => {
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
+
+  const editId = searchParams.get("edit");
+  const isEditing = !!editId;
+
+  useEffect(() => {
+    if (editId) {
+      const charge = getChargeById(Number(editId));
+      if (charge) {
+        setName(charge.name);
+        setPrice(charge.price);
+        setStatus(charge.status);
+      }
+    }
+  }, [editId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,15 +38,24 @@ const DeliveryCharge = () => {
       toast({ title: "Please fill all fields", variant: "destructive" });
       return;
     }
-    addCharge(name, price, status);
-    toast({ title: "Delivery charge added successfully" });
+    if (isEditing) {
+      updateCharge(Number(editId), name, price, status);
+      toast({ title: "Delivery charge updated successfully" });
+    } else {
+      addCharge(name, price, status);
+      toast({ title: "Delivery charge added successfully" });
+    }
     navigate("/delivery-charge-list");
   };
 
   const handleCancel = () => {
-    setName("");
-    setPrice("");
-    setStatus("");
+    if (isEditing) {
+      navigate("/delivery-charge-list");
+    } else {
+      setName("");
+      setPrice("");
+      setStatus("");
+    }
   };
 
   return (
@@ -43,7 +67,9 @@ const DeliveryCharge = () => {
           <div className="p-6 max-w-[1600px] mx-auto">
             <h1 className="text-2xl font-bold text-foreground mb-6">Delivery Charge</h1>
             <Card className="p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-6">Add Delivery Charge</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-6">
+                {isEditing ? "Edit Delivery Charge" : "Add Delivery Charge"}
+              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div className="space-y-2">
@@ -67,11 +93,11 @@ const DeliveryCharge = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Button type="submit" className="bg-primary hover:bg-primary/90 px-6">
-                    Add Now
+                    {isEditing ? "Update" : "Add Now"}
                     <Plus className="w-4 h-4 ml-2" />
                   </Button>
                   <Button type="button" variant="outline" className="px-6" onClick={handleCancel}>
-                    cancel
+                    Cancel
                   </Button>
                 </div>
               </form>
