@@ -231,6 +231,7 @@ const ProductCreate = () => {
                     placeholder="Select seller name"
                     value={fabric}
                     onChange={setFabric}
+                    onAddNew={() => setSellerModalOpen(true)}
                   />
                   <SelectWithAdd
                     label="Shape"
